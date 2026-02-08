@@ -14,8 +14,8 @@ KERNEL_SRC = kernel.c
 KERNEL_OBJS = bootloader.o kernel.o
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -O2 -march=rv32im -mabi=ilp32
-ASFLAGS = -march=rv32im
+CFLAGS = -Wall -Wextra -O2 -march=rv32im_zicsr -mabi=ilp32
+ASFLAGS = -march=rv32im_zicsr
 LDFLAGS = -T linker.ld -nostdlib -nostartfiles -m elf32lriscv
 
 # Default target
