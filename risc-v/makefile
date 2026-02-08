@@ -33,7 +33,7 @@ $(KERNEL).elf: $(KERNEL_OBJS)
 
 # Test with QEMU
 qemu: $(KERNEL).elf
-	qemu-system-riscv64 \
+	qemu-system-riscv32 \
 		-machine virt \
 		-nographic \
 		-bios none \
