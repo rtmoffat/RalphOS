@@ -14,7 +14,7 @@ KERNEL_SRC = kernel.c
 KERNEL_OBJS = bootloader.o kernel.o
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -O2 -march=rv64imac_zicsr -mabi=lp64
+CFLAGS = -Wall -Wextra -O2 -march=rv64imac_zicsr -mabi=lp64 -mcmodel=medany
 ASFLAGS = -march=rv64imac_zicsr
 LDFLAGS = -T linker.ld -nostdlib -m elf64lriscv
 
