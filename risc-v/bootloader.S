@@ -1,62 +1,30 @@
-# Simple RISC-V Bootloader for QEMU
-# This bootloader loads a kernel from the first sector of a disk
-
-.section .text
+# Minimal RV32 entry for QEMU -kernel.
+.section .text.init
 .global _start
 
+.extern __bss_start
+.extern __bss_end
+.extern __stack_top
+.extern kernel_main
+
 _start:
-    # Disable interrupts
-    li x1, 0
-    csrw mie, x1        # Clear machine interrupt enable register
-    csrw mstatus, x1    # Clear machine status register
+    # Disable interrupts.
+    li t0, 0
+    csrw mie, t0
+    csrw mstatus, t0
 
-    # Set up stack pointer (8KB stack at 0x80000000)
-    li x2, 0x80002000
-    mv sp, x2
+    # Set up stack.
+    la sp, __stack_top
 
-    # Load kernel from disk (first sector)
-    li x10, 0x80000000  # Kernel load address
-    li x11, 0x10000000  # Disk address (first sector)
-    li x12, 512         # Number of bytes to load
-
-load_loop:
-    beq x12, x0, load_done
-    lw x13, 0(x11)      # Load word from disk
-    sw x13, 0(x10)      # Store word to kernel address
-    addi x10, x10, 4    # Increment kernel address
-    addi x11, x11, 4    # Increment disk address
-    addi x12, x12, -4   # Decrement byte counter
-    j load_loop
-
-load_done:
-    # Jump to kernel
-    li x10, 0x80000000  # Kernel entry point
-    jr x10              # Jump to kernel
-
-# Simple kernel to test the bootloader
-.section .text.kernel
-.global kernel_start
-
-kernel_start:
-    # Simple kernel that just loops
-    li x10, 0x80000000  # Kernel entry point
-    li x11, 0x80000000  # Another copy for comparison
-    
-    # Simple loop to show execution
-    li x12, 100000000   # Counter
-    
-loop:
-    addi x12, x12, -1
-    bnez x12, loop
-    
-    # Infinite loop
-    j kernel_start
-
-# Bootloader data section
-.section .data
-    .align 4
-    .word 0x00000000    # Padding to align to 4-byte boundary
-
-# Bootloader BSS section
-.section .bss
-    .space 8192         # 8KB of uninitialized data (for stack)
+    # Clear .bss.
+    la t0, __bss_start
+    la t1, __bss_end
+1:
+    bgeu t0, t1, 2f
+    sw zero, 0(t0)
+    addi t0, t0, 4
+    j 1b
+2:
+    # Jump to kernel.
+    la t0, kernel_main
+    jr t0

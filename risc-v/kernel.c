@@ -1,5 +1,5 @@
 // Simple kernel for testing bootloader
-void _start(void) {
+void kernel_main(void) {
     // Simple kernel that prints a message
     volatile char *video = (volatile char *)0x80000000;
     
