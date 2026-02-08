@@ -16,7 +16,7 @@ KERNEL_OBJS = bootloader.o kernel.o
 # Compiler flags
 CFLAGS = -Wall -Wextra -O2 -march=rv32im -mabi=ilp32
 ASFLAGS = -march=rv32im
-LDFLAGS = -T linker.ld -nostdlib -nostartfiles
+LDFLAGS = -T linker.ld -nostdlib -nostartfiles -m elf32lriscv
 
 # Default target
 all: $(KERNEL).elf
