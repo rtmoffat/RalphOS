@@ -2,6 +2,10 @@
 
 Making my own OS
 
+## risc-v
+Run make -C risc-v
+Run make -C risc-v qemu
+
 ## Simple BIOS Bootloader (for QEMU Testing)
 
 A minimal bootloader that displays "hello" on screen.
