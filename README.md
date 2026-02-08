@@ -3,8 +3,10 @@
 Making my own OS
 
 ## risc-v
-Run make -C risc-v
+```Run make -C risc-v
 Run make -C risc-v qemu
+Should print a message and then shutdown after 10 seconds
+``` 
 
 ## Simple BIOS Bootloader (for QEMU Testing)
 
