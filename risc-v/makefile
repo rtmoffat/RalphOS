@@ -36,6 +36,7 @@ qemu: $(KERNEL).elf
 	qemu-system-riscv64 \
 		-machine virt \
 		-nographic \
+		-bios none \
 		-kernel $(KERNEL).elf \
 		-smp 1 \
 		-m 128M
